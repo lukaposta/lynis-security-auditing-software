@@ -1,0 +1,22 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# VirtualBox
+*.vdi
+*.vbox
+*.vbox-prev
+*.iso
+
+# Lynis logs (raw)
+*.dat
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Screenshots cache
+results/screenshots/tmp/
