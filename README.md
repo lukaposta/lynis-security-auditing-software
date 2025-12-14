@@ -16,9 +16,9 @@ Projekt se provodi u kontroliranom virtualnom okruženju korištenjem više virt
 
 ## Alati i standardi
 
-- VirtualBox – platforma za virtualizaciju  
-- Lynis – alat za sigurnosnu analizu sustava  
-- CIS Benchmarks – referentni sigurnosni standard  
+- VirtualBox - platforma za virtualizaciju  
+- Lynis - alat za sigurnosnu analizu sustava  
+- CIS Benchmarks - referentni sigurnosni standard  
 
 ## Tijek rada
 
@@ -31,10 +31,10 @@ Projekt se provodi u kontroliranom virtualnom okruženju korištenjem više virt
 
 ## Struktura repozitorija
 
-- `docs/` – teorijska podloga, metodologija, CIS reference i zaključci  
-- `implementation/` – upute za postavljanje okruženja i koraci učvršćivanja za svaki operacijski sustav  
-- `results/` – rezultati sigurnosnih analiza, usporedbe i snimke zaslona  
-- `presentation/` – završna prezentacija projekta  
+- `docs/` - teorijska podloga, metodologija, CIS reference i zaključci  
+- `implementation/` - upute za postavljanje okruženja i koraci učvršćivanja za svaki operacijski sustav  
+- `results/` - rezultati sigurnosnih analiza, usporedbe i snimke zaslona  
+- `presentation/` - završna prezentacija projekta  
 
 ## Članovi tima
 
