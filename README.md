@@ -1,50 +1,50 @@
 # Lynis Security Auditing Software
 
-## Project Overview
+## Pregled projekta
 
-This project focuses on security auditing and system hardening of UNIX-based operating systems using the Lynis auditing tool and CIS Benchmarks as a reference standard.
+Ovaj projekt bavi se sigurnosnom analizom i učvršćivanjem UNIX-baziranih operacijskih sustava pomoću alata Lynis, uz korištenje CIS Benchmarks dokumenata kao referentnog sigurnosnog standarda.
 
-The main objective is to identify security weaknesses on freshly installed systems, analyze the audit results, apply selected hardening measures, and evaluate security improvements through a second audit.
+Cilj projekta je identificirati sigurnosne slabosti na svježe instaliranim sustavima, analizirati rezultate sigurnosne provjere, primijeniti odabrane mjere učvršćivanja sustava te provjeriti poboljšanje sigurnosti ponovnim pokretanjem analize.
 
-The project is implemented in a controlled virtual environment using multiple virtual machines. Security recommendations provided by Lynis are compared with relevant CIS Benchmark guidelines in order to justify and explain applied configuration changes.
+Projekt se provodi u kontroliranom virtualnom okruženju korištenjem više virtualnih računala. Sigurnosne preporuke koje generira alat Lynis uspoređuju se s odgovarajućim CIS Benchmarks smjernicama kako bi se opravdale i objasnile provedene konfiguracijske promjene.
 
-## Operating Systems
+## Korišteni operacijski sustavi
 
 - Ubuntu Server 22.04 LTS  
 - Rocky Linux 9  
 - FreeBSD 14  
 
-## Tools and Standards
+## Alati i standardi
 
-- VirtualBox – virtualization platform  
-- Lynis – security auditing tool  
-- CIS Benchmarks – security configuration reference  
+- VirtualBox – platforma za virtualizaciju  
+- Lynis – alat za sigurnosnu analizu sustava  
+- CIS Benchmarks – referentni sigurnosni standard  
 
-## Project Workflow
+## Tijek rada
 
-1. Installation of virtual machines with default system configuration  
-2. Initial Lynis audit (baseline analysis)  
-3. Review of identified warnings and suggestions  
-4. Selection and application of system hardening measures  
-5. Second Lynis audit after hardening  
-6. Comparison and analysis of results before and after hardening  
+1. Instalacija virtualnih računala s početnim postavkama sustava  
+2. Pokretanje početne sigurnosne analize pomoću alata Lynis  
+3. Pregled i analiza pronađenih upozorenja i preporuka  
+4. Odabir i primjena mjera učvršćivanja sustava  
+5. Ponovno pokretanje sigurnosne analize nakon primjene promjena  
+6. Usporedba i analiza rezultata prije i nakon učvršćivanja sustava  
 
-## Repository Structure
+## Struktura repozitorija
 
-- `docs/` – theoretical background, methodology, CIS references, and conclusions  
-- `implementation/` – setup instructions and hardening steps for each operating system  
-- `results/` – audit outputs, findings, and screenshots  
-- `presentation/` – final presentation slides  
+- `docs/` – teorijska podloga, metodologija, CIS reference i zaključci  
+- `implementation/` – upute za postavljanje okruženja i koraci učvršćivanja za svaki operacijski sustav  
+- `results/` – rezultati sigurnosnih analiza, usporedbe i snimke zaslona  
+- `presentation/` – završna prezentacija projekta  
 
-## Team Members
+## Članovi tima
 
 - Lidija Mudri  
 - Paula Narančić  
 - Vito Petrinjak  
 - Luka Pošta  
 
-## How to Run the Project
+## Pokretanje projekta
 
-This project does not contain executable application code.
+Projekt ne sadrži izvršni aplikacijski kod.
 
-To reproduce the results, follow the setup and audit instructions provided in the `implementation/` directory for each operating system.
+Za ponavljanje provedenih analiza potrebno je slijediti upute za postavljanje sustava i izvođenje sigurnosne analize koje se nalaze u direktoriju `implementation/` za svaki operacijski sustav.
