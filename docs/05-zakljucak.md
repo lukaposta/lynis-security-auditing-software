@@ -1,1 +1,13 @@
-# Analiza i zaključak
+# 5. Analiza i zaključak
+
+Ovim radom provedena je sigurnosna analiza Linux poslužiteljskog sustava temeljena na kombinaciji sigurnosnog audita i selektivnog hardeninga. Cilj rada bio je praktično primijeniti postojeće sigurnosne smjernice i alate na svježe instalirani Ubuntu Server sustav te procijeniti učinak takvog pristupa kroz strukturirani i metodološki utemeljen proces.
+
+U praktičnom dijelu rada primijenjen je fazni pristup koji uključuje inicijalni sigurnosni audit, odabir i primjenu hardening mjera te ponovnu evaluaciju sigurnosnog stanja. Korištenjem alata Lynis omogućena je sustavna identifikacija sigurnosnih slabosti, dok su CIS Benchmarks poslužili kao referentni okvir za donošenje odluka o primjeni sigurnosnih mjera. Smjernice iz NIST Special Publication 800-123 korištene su kao teorijska podloga koja opravdava iterativni karakter sigurnosnog procesa.
+
+Analiza rezultata pokazuje da se i selektivnim pristupom hardeningu može postići vidljivo poboljšanje sigurnosnog stanja sustava. Umjesto nekritičke primjene svih dostupnih preporuka, naglasak je stavljen na relevantnost i opravdanost pojedinih mjera u kontekstu ciljanog poslužiteljskog okruženja. Takav pristup omogućuje bolju kontrolu nad konfiguracijskim promjenama i olakšava interpretaciju njihovog učinka.
+
+Usporedba s postojećim rješenjima iz literature pokazala je da se vlastiti pristup nalazi između auditno orijentiranih i visoko automatiziranih rješenja. Za razliku od radova koji se fokusiraju isključivo na procjenu sigurnosnog stanja ili na razvoj automatiziranih alata, ovaj rad naglašava razumijevanje procesa i jasnu povezanost između teorijskih smjernica i praktične primjene sigurnosnih mjera. Time se potvrđuje da jednostavniji i transparentniji pristupi imaju značajnu vrijednost u edukativnom i analitičkom kontekstu.
+
+Ograničenja rada proizlaze prvenstveno iz ograničenog opsega okruženja, budući da je analiza provedena na jednom operacijskom sustavu i jednom virtualnom stroju. Također, izostanak automatizacije i skalabilnosti znači da se pristup ne može izravno primijeniti u velikim ili heterogenim produkcijskim okruženjima bez dodatnih prilagodbi.
+
+Unatoč navedenim ograničenjima, rad ispunjava postavljene ciljeve i potvrđuje da kombinacija sigurnosnog audita, referentnih standarda i selektivnog hardeninga predstavlja metodološki ispravan i praktično primjenjiv pristup osiguravanju Linux poslužiteljskih sustava. Budući radovi mogli bi proširiti analizu na više operacijskih sustava, uključiti višu razinu automatizacije ili istražiti integraciju s alatima za kontinuirani nadzor i upravljanje sigurnošću.
