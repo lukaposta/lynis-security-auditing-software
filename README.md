@@ -44,6 +44,6 @@ Projekt se provodi u kontroliranom virtualnom okruženju. Sigurnosne preporuke k
 
 ## Pokretanje projekta
 
-Projekt ne sadrži izvršni aplikacijski kod.
+Projekt ne sadrži vlastiti izvršni aplikacijski kod. Implementacijski dio temelji se na izvođenju sistemskih naredbi i analizi rezultata sigurnosnih alata.
 
 Za ponavljanje provedene sigurnosne analize potrebno je instalirati Ubuntu Server 22.04 LTS u virtualnom okruženju te slijediti korake opisane u direktoriju `implementation/`.
