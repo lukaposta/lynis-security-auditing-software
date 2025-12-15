@@ -92,3 +92,32 @@ Benchmark podržava ručnu provjeru i ručnu provedbu preporuka, ali ujedno pred
 
 U okviru ovog projekta CIS Benchmarks služe kao referentni okvir za opravdanje odabranih hardening mjera, dok se konkretna procjena stanja sustava i mjerenje poboljšanja sigurnosti provodi pomoću alata za sigurnosni audit. Takav pristup u skladu je sa smjernicama NIST-a koje sigurnosne standarde promatraju kao pomoć pri donošenju odluka, a ne kao rigidne kontrolne liste.
 
+## 2.5 Pregled srodnih radova
+
+U ovoj cjelini prikazuju se odabrani znanstveni i stručni radovi koji se bave sigurnosnim auditom i hardeningom Linux sustava. Radovi su grupirani prema pristupu i cilju istraživanja, kako bi se jasno istaknule razlike između auditno orijentiranih radova, eksperimentalnih istraživanja s hardeningom, automatiziranih rješenja, specijaliziranih proširenja alata te preglednih teorijskih radova. Takva podjela omogućuje jasnije pozicioniranje ovog projekta u odnosu na postojeća rješenja i istraživanja.
+
+### 2.5.1 Radovi usmjereni na sigurnosni audit Linux sustava
+
+Sedano i Salman (2021) provode sigurnosni audit Linux operacijskog sustava korištenjem CIS Benchmarks standarda uz pomoć alata Chef InSpec. Rad se fokusira na procjenu inicijalnog sigurnosnog stanja svježe instaliranog Ubuntu Server sustava, pri čemu se kvantitativno prikazuje razina usklađenosti s CIS preporukama. Istraživanje ne uključuje provedbu hardening mjera niti ponovnu evaluaciju sustava, već naglašava slabosti zadane konfiguracije i ograničenja automatizirane provjere.
+
+Sholihin i Salman (2025) predstavljaju OSCAT, automatizirani alat za audit konfiguracije poslužiteljskih sustava temeljen na CIS Benchmarks standardima. Rad se isključivo bavi auditom i compliance provjerom, bez primjene hardening mjera. Poseban naglasak stavljen je na usporedbu automatiziranog i ručnog audita te na učinkovitost i točnost automatiziranog pristupa u enterprise okruženju.
+
+### 2.5.2 Radovi koji kombiniraju audit i hardening
+
+Disi (2022) provodi eksperimentalno istraživanje koje obuhvaća sigurnosni audit Linux sustava, primjenu hardening mjera i ponovnu evaluaciju sigurnosnog stanja. Rad koristi CIS Benchmarks i druge sigurnosne standarde kao referentni okvir te kvantitativno prikazuje poboljšanje sigurnosti kroz compliance score prije i nakon hardeninga. Istraživanje obuhvaća više distribucija i alata te naglašava razliku između automatiziranih i ručnih pristupa remedijaciji.
+
+### 2.5.3 Automatizirani alati i okviri za sigurnosni audit i hardening
+
+Akporhuarho (2025) razvija automatizirano rješenje za hardening Linux sustava namijenjeno razvojnim okruženjima i malim poduzećima. Rad kombinira audit i hardening kroz automatizirani tijek rada temeljen na OpenSCAP-u i CIS profilima. Naglasak je na pojednostavljivanju sigurnosnog hardeninga i smanjenju potrebe za ručnim intervencijama, uz kvantitativnu usporedbu sigurnosnog stanja prije i nakon primjene mjera.
+
+### 2.5.4 Specijalizirani pristupi i proširenja audit alata
+
+Ansong, Affum i Donkor (2025) predstavljaju PriviLynis, proširenje alata Lynis usmjereno na detekciju i ublažavanje privilege escalation ranjivosti. Rad se ne bavi općim hardeningom sustava, već specijaliziranom analizom lokalnih ranjivosti temeljenih na CVE zapisima. Istraživanje pokazuje da je moguće nadograditi postojeći audit alat dodatnim mehanizmima za specifične sigurnosne domene, uz minimalan utjecaj na performanse sustava.
+
+### 2.5.5 Pregledni i teorijski radovi o Linux hardeningu
+
+Aravindan (2025) donosi pregledni rad koji sintetizira postojeće tehnike hardeninga Linux sustava u enterprise okruženjima. Rad obuhvaća sigurnosne standarde, alate i koncepte te raspravlja o izazovima primjene hardening mjera, uključujući balans između sigurnosti i upotrebljivosti te zahtjeve usklađenosti s regulatornim okvirima. Istraživanje nema eksperimentalni dio niti mjerljive rezultate, već pruža teorijsku i kontekstualnu podlogu za praktične pristupe sigurnosti Linux sustava.
+
+### 2.5.6 Pozicioniranje ovog projekta u odnosu na postojeće radove
+
+U odnosu na prikazane radove, ovaj projekt zauzima srednju poziciju između teorijskih pregleda i složenih automatiziranih rješenja. Za razliku od radova koji se fokusiraju isključivo na audit ili isključivo na automatizirani hardening, projekt kombinira sigurnosni audit i selektivnu primjenu hardening mjera na jednom operacijskom sustavu. CIS Benchmarks koriste se kao referentni standard, dok se konkretna procjena sigurnosnog stanja i mjerenje poboljšanja provodi pomoću alata za sigurnosni audit. Time se projekt uklapa u postojeću praksu, ali zadržava jasan fokus na edukativnom i analitičkom pristupu sigurnosti Linux poslužiteljskog sustava.
