@@ -1,4 +1,4 @@
-# Uvod
+# 1. Uvod
 
 Sigurnost informacijskih sustava predstavlja jedan od ključnih izazova u suvremenim računalnim okruženjima. Linux poslužitelji široko se koriste za pružanje mrežnih usluga, pohranu podataka i izvršavanje aplikacija, zbog čega često postaju meta različitih sigurnosnih prijetnji. Iako Linux operacijski sustavi nude visoku razinu stabilnosti i pouzdanosti, njihova stvarna sigurnost uvelike ovisi o pravilnoj konfiguraciji i kontinuiranom nadzoru.
 
