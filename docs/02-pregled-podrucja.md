@@ -1,4 +1,4 @@
-# Pregled područja i postojećih radova/rješenja
+# 2. Pregled područja i postojećih radova/rješenja
 
 U ovoj cjelini daje se pregled teorijskih i praktičnih aspekata sigurnosti Linux poslužiteljskih sustava. Prikazuju se temeljni pojmovi vezani uz sigurnosni audit i hardening, relevantni alati i standardi te postojeća istraživanja iz tog područja. Cilj pregleda područja je smjestiti ovaj projekt u širi kontekst postojećih praksi i istraživanja te opravdati odabrani pristup i korištene alate.
 
