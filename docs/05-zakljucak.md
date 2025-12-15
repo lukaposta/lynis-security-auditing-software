@@ -1,1 +1,1 @@
-# Zaključak
+# Analiza i zaključak
