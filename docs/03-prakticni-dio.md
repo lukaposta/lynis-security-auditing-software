@@ -1,1 +1,1 @@
-# Praktični dio
+# Vlastiti praktični dio
