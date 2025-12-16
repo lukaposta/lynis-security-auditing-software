@@ -4,7 +4,7 @@ U ovoj cjelini provodi se usporedba vlastitog pristupa sigurnosnom auditu i hard
 
 Usporedba se temelji na radovima koji su prethodno analizirani u pregledu srodnih radova te na teorijskim smjernicama i standardima koji se koriste kao referentni okvir. Poseban naglasak stavljen je na opravdanje vlastitog pristupa u kontekstu postojećih rješenja, uz jasno isticanje njegovih prednosti i ograničenja. Time se omogućuje smještanje ovog projekta u širi kontekst postojećih praksi sigurnosnog audita i hardeninga Linux sustava.
 
-## 4.1 Kriteriji usporedbe
+## 4.1. Kriteriji usporedbe
 
 Kako bi usporedba bila sustavna i metodološki utemeljena, definirani su jasni kriteriji prema kojima se vlastiti pristup uspoređuje s postojećim rješenjima iz literature. Odabrani kriteriji proizlaze iz ciljeva rada i karakteristika analiziranih radova, a omogućuju objektivnu analizu različitih pristupa sigurnosnom auditu i hardeningu.
 
@@ -20,7 +20,7 @@ Konačno, kriteriji usporedbe uključuju i način evaluacije sigurnosnog stanja.
 
 Definirani kriteriji služe kao temelj za daljnje podcjeline ove usporedbe, u kojima se vlastiti pristup sustavno analizira u odnosu na pojedine skupine postojećih rješenja.
 
-## 4.2 Usporedba metodološkog pristupa
+## 4.2. Usporedba metodološkog pristupa
 
 Metodološki pristup vlastitog rada temelji se na faznom procesu koji uključuje inicijalni sigurnosni audit, selektivnu primjenu hardening mjera i ponovnu evaluaciju sigurnosnog stanja. Takav pristup omogućuje jasno praćenje promjena i njihovo povezivanje s identificiranim sigurnosnim slabostima, uz očuvanje preglednosti i kontrole nad opsegom zahvata.
 
@@ -34,7 +34,7 @@ Specijalizirani pristup prikazan u radu Ansong i sur. (2025) metodološki je usm
 
 U cjelini, metodološki pristup vlastitog rada može se opisati kao umjeren i uravnotežen. On ne teži potpunoj automatizaciji niti eksperimentalnoj širini, već jasno strukturiranom i razumljivom procesu koji povezuje teorijske smjernice, sigurnosni audit i selektivni hardening u koherentnu cjelinu. Takav pristup omogućuje jasnu usporedbu s postojećim rješenjima te predstavlja razumnu sredinu između složenih automatiziranih sustava i isključivo auditno orijentiranih istraživanja.
 
-## 4.3 Usporedba korištenih alata i standarda
+## 4.3. Usporedba korištenih alata i standarda
 
 U vlastitom radu korišten je jedan alat za sigurnosni audit, Lynis, uz oslanjanje na CIS Benchmarks kao referentni sigurnosni standard. Takva kombinacija omogućuje jasan razdor između alata koji provodi tehničku analizu sustava i standarda koji služi kao okvir za interpretaciju nalaza i odabir hardening mjera. Time se izbjegava vezivanje audita uz strogu provjeru usklađenosti, a naglasak se stavlja na razumijevanje sigurnosnog stanja sustava.
 
@@ -48,7 +48,7 @@ Specijalizirani rad Ansong i sur. (2025) također koristi Lynis, ali ga proširu
 
 U konačnici, usporedba pokazuje da se vlastiti rad razlikuje po jasnoj podjeli uloga između alata i standarda. Lynis se koristi za tehničku procjenu sigurnosnog stanja, dok CIS Benchmarks služe kao referentna smjernica, a ne kao stroga mjera usklađenosti. Takav pristup omogućuje veću fleksibilnost u odabiru i primjeni hardening mjera te olakšava razumijevanje odnosa između nalaza audita i sigurnosnih preporuka.
 
-## 4.4 Razina automatizacije i složenost rješenja
+## 4.4. Razina automatizacije i složenost rješenja
 
 Razina automatizacije predstavlja jedan od ključnih aspekata razlikovanja vlastitog pristupa u odnosu na postojeća rješenja iz literature. U ovom radu sigurnosni audit i hardening provode se ručno, uz korištenje postojećeg audit alata, bez razvoja dodatnih skripti ili automatiziranih mehanizama za primjenu sigurnosnih mjera. Takav pristup smanjuje tehničku složenost rješenja i omogućuje potpunu kontrolu nad svakom promjenom konfiguracije.
 
@@ -60,7 +60,7 @@ Nasuprot tome, vlastiti rad svjesno izbjegava razvoj složenih automatiziranih r
 
 Usporedba razine automatizacije pokazuje da se vlastiti rad nalazi na suprotnoj strani spektra u odnosu na automatizirana i skalabilna rješenja iz literature. Dok automatizacija donosi prednosti u velikim i složenim okruženjima, ručni i jednostavniji pristup primijenjen u ovom radu omogućuje veću transparentnost, lakšu interpretaciju rezultata i jasnije povezivanje teorijskih smjernica s praktičnom primjenom sigurnosnih mjera.
 
-## 4.5 Fokus analize i sigurnosni opseg
+## 4.5. Fokus analize i sigurnosni opseg
 
 Fokus analize u vlastitom radu usmjeren je na cjelovitu procjenu sigurnosnog stanja Linux poslužiteljskog sustava, uz obuhvaćanje više sigurnosnih domena koje su tipične za serverska okruženja. Audit i hardening promatraju se kao opći procesi koji zahvaćaju konfiguraciju operacijskog sustava, mrežne postavke, autentikaciju, kontrolu pristupa te zapisivanje i nadzor sigurnosnih događaja. Takav široki sigurnosni opseg omogućuje dobivanje uravnotežene slike ukupne sigurnosne konfiguracije sustava.
 
@@ -72,7 +72,7 @@ Vlastiti rad zauzima srednju poziciju između ovih pristupa. On ne ulazi u dubin
 
 Takav uravnotežen fokus omogućuje povezivanje teorijskih smjernica i praktične primjene sigurnosnih mjera, uz zadržavanje jasne strukture i preglednosti analize. U kontekstu usporedbe s postojećim rješenjima, vlastiti pristup ističe se kao općenit i primjenjiv na tipične serverske scenarije, bez potrebe za specijalizacijom ili složenim prilagodbama.
 
-## 4.6 Evaluacija rezultata i mjerljivost
+## 4.6. Evaluacija rezultata i mjerljivost
 
 Način evaluacije sigurnosnog stanja predstavlja važan element usporedbe između vlastitog rada i postojećih rješenja iz literature. U vlastitom radu evaluacija se temelji na usporedbi početnog i završnog sigurnosnog stanja sustava, pri čemu se koristi isti audit alat i isti postupak u obje faze. Takav pristup omogućuje dosljednu i usporedivu procjenu učinka primijenjenih hardening mjera, bez utjecaja metodoloških razlika.
 
@@ -84,7 +84,7 @@ U vlastitom radu mjerljivost se promatra u širem smislu, kroz konceptualnu uspo
 
 Usporedba pokazuje da se vlastiti pristup nalazi između strogo kvantitativnih compliance-orijentiranih evaluacija i isključivo kvalitativnih procjena. Time se postiže ravnoteža između mjerljivosti i interpretabilnosti rezultata, što je posebno prikladno za analitičke i edukativne projekte u području sigurnosti Linux poslužiteljskih sustava.
 
-## 4.7 Prednosti i ograničenja vlastitog pristupa
+## 4.7. Prednosti i ograničenja vlastitog pristupa
 
 Usporedba s postojećim rješenjima omogućuje jasnije sagledavanje prednosti i ograničenja vlastitog pristupa sigurnosnom auditu i hardeningu Linux poslužiteljskog sustava. Jedna od glavnih prednosti vlastitog rada jest jednostavnost metodološkog okvira. Fokusiranjem na jedan operacijski sustav i jedan audit alat postiže se visoka razina preglednosti, što olakšava razumijevanje cijelog procesa i interpretaciju rezultata.
 
@@ -96,7 +96,7 @@ S druge strane, vlastiti pristup ima i jasno definirana ograničenja. Analiza je
 
 Ograničenje predstavlja i izostanak visoke razine automatizacije. Iako ručni pristup donosi prednosti u pogledu kontrole i razumijevanja, on nije prikladan za okruženja s velikim brojem sustava ili za situacije u kojima je potrebna brza i ponovljiva primjena sigurnosnih politika. U tom smislu, vlastiti rad svjesno žrtvuje skalabilnost u korist jednostavnosti i jasnoće.
 
-## 4.8 Sažetak usporedbe
+## 4.8. Sažetak usporedbe
 
 Usporedba vlastitog pristupa s postojećim rješenjima iz literature pokazuje da se ovaj rad smješta između teorijskih i visoko automatiziranih praktičnih rješenja. Za razliku od radova koji se fokusiraju isključivo na audit ili na automatizirani hardening, vlastiti pristup kombinira sigurnosni audit i selektivnu primjenu hardening mjera u jasno strukturiranom i razumljivom procesu.
 
