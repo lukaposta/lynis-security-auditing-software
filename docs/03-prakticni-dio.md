@@ -2,7 +2,7 @@
 
 Ova cjelina opisuje provedbu vlastitog praktičnog dijela rada, s naglaskom na primjenu sigurnosnog audita i hardening mjera nad Linux poslužiteljskim sustavom. Praktični dio temelji se na stvarnom radnom okruženju i slijedi fazni pristup koji uključuje inicijalni audit, odabir i primjenu hardening mjera te ponovnu evaluaciju sigurnosnog stanja. U ovoj cjelini naglasak je na opisu postupaka i odluka, bez ulaska u tehničke detalje, naredbe ili ispise alata, koji se obrađuju u zasebnim dijelovima projekta.
 
-## 3.1 Opis radnog okruženja
+## 3.1. Opis radnog okruženja
 
 Praktični dio rada proveden je u virtualnom okruženju korištenjem alata Oracle VirtualBox. U sklopu virtualnog okruženja korišten je jedan virtualni stroj koji simulira realističan Linux poslužiteljski sustav, što omogućuje kontrolirane uvjete rada i ponovljivost postupaka.
 
@@ -10,7 +10,7 @@ Na virtualni stroj instaliran je Ubuntu Server 22.04 LTS, bez grafičkog korisni
 
 Virtualno okruženje korišteno je kao izolirana platforma za provođenje sigurnosnog audita i hardening mjera, bez utjecaja na produkcijske sustave. Takav pristup omogućuje sigurno eksperimentiranje s konfiguracijama, jasno praćenje promjena i analizu njihovog utjecaja na sigurnosno stanje sustava.
 
-## 3.2 Korišteni alati i referentni standardi
+## 3.2. Korišteni alati i referentni standardi
 
 U provedbi praktičnog dijela rada korištena je kombinacija alata i sigurnosnih standarda koji zajedno omogućuju strukturiran, ponovljiv i metodološki opravdan pristup sigurnosnom auditu i hardeningu Linux poslužiteljskog sustava. Odabrani alati i standardi imaju jasno razgraničene uloge te se ne koriste kao međusobne zamjene, već kao komplementarni elementi istog procesa.
 
@@ -22,7 +22,7 @@ Teorijsku i metodološku podlogu praktičnog dijela rada čine smjernice iz doku
 
 Kombinacijom Lynisa, CIS Benchmarks i NIST smjernica ostvaruje se jasan odnos između alata, standarda i metodologije. Lynis služi za identifikaciju sigurnosnih slabosti, CIS Benchmarks za vrednovanje i kontekstualizaciju preporučenih mjera, dok NIST osigurava teorijski okvir koji povezuje audit i hardening u koherentan sigurnosni proces. Takav pristup omogućuje provedbu praktičnog dijela rada na strukturiran i akademski utemeljen način, bez oslanjanja na automatizirane ili nekritički primijenjene konfiguracijske promjene.
 
-### 3.3 Provedba inicijalnog sigurnosnog audita
+### 3.3. Provedba inicijalnog sigurnosnog audita
 
 Nakon uspostave radnog okruženja proveden je inicijalni sigurnosni audit sustava s ciljem utvrđivanja početnog sigurnosnog stanja svježe instaliranog Ubuntu Server sustava. Inicijalni audit predstavlja polaznu točku praktičnog dijela rada i služi za identifikaciju potencijalnih sigurnosnih slabosti prije primjene bilo kakvih hardening mjera.
 
@@ -32,7 +32,7 @@ Rezultati inicijalnog audita koriste se kao temelj za daljnje odluke u praktičn
 
 Provedba inicijalnog sigurnosnog audita ujedno omogućuje kasniju usporedbu stanja sustava prije i nakon primjene hardening mjera. Takav pristup u skladu je s preporukama sigurnosnih smjernica koje naglašavaju važnost početne procjene kao preduvjeta za smisleno i mjerljivo poboljšanje sigurnosne razine sustava.
 
-## 3.4 Kriteriji za odabir hardening mjera
+## 3.4. Kriteriji za odabir hardening mjera
 
 Odabir hardening mjera u ovom radu temelji se na svjesno selektivnom pristupu, a ne na potpunoj implementaciji svih preporuka koje proizlaze iz sigurnosnog audita. Takav pristup u skladu je s praktičnim smjernicama sigurnosnog hardeninga, koje naglašavaju potrebu prilagodbe sigurnosnih mjera stvarnoj namjeni sustava i kontekstu njegova korištenja.
 
@@ -44,7 +44,7 @@ Treći kriterij odnosio se na potencijalni utjecaj hardening mjera na funkcional
 
 Konačno, kriteriji odabira hardening mjera oslanjaju se i na smjernice iz NIST Special Publication 800-123, koje sigurnosni hardening promatraju kao iterativan proces. U skladu s tim, u praktičnom dijelu rada naglasak nije stavljen na količinu primijenjenih mjera, već na njihovu smislenost i povezanost s rezultatima sigurnosnog audita. Takav pristup omogućuje jasnu vezu između identificiranih slabosti, odabranih sigurnosnih mjera i njihove kasnije evaluacije.
 
-## 3.5 Provedba hardening mjera
+## 3.5. Provedba hardening mjera
 
 Nakon analize nalaza inicijalnog sigurnosnog audita pristupilo se provedbi odabranih hardening mjera. Hardening je proveden postupno i kontrolirano, u skladu s kriterijima definiranim u prethodnoj cjelini, s ciljem smanjenja napadne površine sustava bez narušavanja njegove osnovne funkcionalnosti.
 
@@ -58,7 +58,7 @@ Osim navedenog, primijenjene su i mjere povezane sa zapisivanjem i nadzorom sigu
 
 Sve hardening mjere provedene su ručno, uz svjesno izbjegavanje automatiziranih alata za masovnu primjenu konfiguracija. Takav pristup omogućuje bolju kontrolu nad svakom promjenom, jasnije razumijevanje njezina učinka te lakšu interpretaciju rezultata u završnoj fazi evaluacije sigurnosnog stanja sustava.
 
-## 3.6 Ponovna evaluacija sigurnosnog stanja
+## 3.6. Ponovna evaluacija sigurnosnog stanja
 
 Nakon planirane i provedene primjene odabranih hardening mjera predviđena je ponovna evaluacija sigurnosnog stanja sustava. Svrha ove faze jest provjeriti učinak primijenjenog hardeninga i utvrditi u kojoj je mjeri sigurnosna konfiguracija sustava unaprijeđena u odnosu na početno stanje.
 
@@ -68,7 +68,7 @@ Rezultati ponovne evaluacije služe za konceptualnu usporedbu sigurnosnog stanja
 
 Provedba ponovne evaluacije ujedno zatvara ciklus sigurnosnog procesa opisanog u ovom radu, koji obuhvaća inicijalni audit, primjenu sigurnosnih mjera i njihovu evaluaciju. Time se uspostavlja jasna poveznica između praktičnog dijela rada i kasnije usporedbe s postojećim rješenjima, u kojoj se rezultati ove faze koriste kao temelj za analizu učinkovitosti odabranog pristupa.
 
-## 3.7 Sažetak praktičnog dijela
+## 3.7. Sažetak praktičnog dijela
 
 U praktičnom dijelu rada prikazan je strukturiran pristup sigurnosnom auditu i hardeningu Linux poslužiteljskog sustava, proveden u kontroliranom virtualnom okruženju. Praktični rad organiziran je kroz jasno definirane faze koje slijede preporučeni sigurnosni ciklus, od inicijalne procjene stanja do ponovne evaluacije sigurnosti.
 
