@@ -1,4 +1,4 @@
-# Vlastito radno okruženje i inicijalna konfiguracija sustava
+# 1. Vlastito radno okruženje i inicijalna konfiguracija sustava
 
 Radno okruženje za praktični dio rada postavljeno je s ciljem osiguravanja kontroliranih i ponovljivih uvjeta za provedbu sigurnosnog audita Linux poslužiteljskog sustava. U ovoj fazi dokumentira se isključivo inicijalno stanje sustava, bez primjene hardening mjera ili provođenja sigurnosnog audita.
 
