@@ -1,4 +1,4 @@
-# 1. Vlastito radno okruženje i inicijalna konfiguracija sustava
+# 1. Vlastito radno okruženje i inicijalna konfiguracija Linux sustava
 
 Radno okruženje za praktični dio rada postavljeno je s ciljem osiguravanja kontroliranih i ponovljivih uvjeta za provedbu sigurnosnog audita Linux poslužiteljskog sustava. U ovoj fazi dokumentira se isključivo inicijalno stanje sustava, bez primjene hardening mjera ili provođenja sigurnosnog audita.
 
@@ -14,7 +14,7 @@ Virtualni stroj korišten u ovom radu služi isključivo kao platforma za sigurn
 
 Prije instalacije operacijskog sustava konfiguriran je virtualni stroj u Oracle VirtualBoxu s unaprijed definiranim hardverskim parametrima. Cilj ove konfiguracije bio je osigurati stabilno i realistično poslužiteljsko okruženje, uz minimalan, ali dostatan skup resursa potreban za rad Ubuntu Server sustava i provođenje sigurnosne analize.
 
-Virtualnom stroju dodijeljena su dva procesorska jezgra i 2048 MB radne memorije. Takva konfiguracija predstavlja tipično minimalno serversko okruženje te omogućuje nesmetan rad sustava, alata za audit i osnovnih servisa, bez uvođenja nepotrebnih varijabli koje bi mogle utjecati na rezultate analize.
+Virtualnom stroju dodijeljene su dvije procesorske jezgre (CPU) i 2048 MB radne memorije. Takva konfiguracija predstavlja tipično minimalno serversko okruženje te omogućuje nesmetan rad sustava, alata za audit i osnovnih servisa, bez uvođenja nepotrebnih varijabli koje bi mogle utjecati na rezultate analize.
 
 Kao virtualni disk korišten je VDI format, s dinamičkom alokacijom prostora i ukupnim kapacitetom od 25 GB. Disk je konfiguriran kao jedan virtualni uređaj bez prethodne prealokacije pune veličine, što omogućuje učinkovitije korištenje resursa host sustava. EFI način pokretanja nije korišten, kako bi se zadržala standardna i jednostavna konfiguracija pokretanja sustava.
 
