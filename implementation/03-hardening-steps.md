@@ -793,13 +793,6 @@ Ovim koracima uklonjeni su sigurnosni nedostaci identificirani u *baseline* stan
 
 ---
 
-U pravu si. Ovo treba biti **kraće, sažeto i simetrično** s prethodnim CIS podcjelinama.
-Ispod je **skraćena, točno odmjerena verzija** podcjeline **3.5.X**, u istom opsegu kao firewall i SSH CIS dijelovi.
-
-Sve je pisano **za direktni copy-paste u GitHub `.md` datoteku**.
-
----
-
 ## 3.5.1. Usklađenost zapisivanja i nadzora s CIS Ubuntu Linux 22.04 LTS Benchmarkom
 
 Provedene hardening mjere u području zapisivanja i nadzora događaja usklađene su s preporukama iz dokumenta **CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0**, poglavlje **6. Logging and Auditing**.
