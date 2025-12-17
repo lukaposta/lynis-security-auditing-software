@@ -1,6 +1,6 @@
 # 3. Vlastiti praktični dio
 
-Ova cjelina opisuje provedbu vlastitog praktičnog dijela rada, s naglaskom na primjenu sigurnosnog audita i hardening mjera nad Linux poslužiteljskim sustavom. Praktični dio temelji se na stvarnom radnom okruženju i slijedi fazni pristup koji uključuje inicijalni audit, odabir i primjenu hardening mjera te ponovnu evaluaciju sigurnosnog stanja. U ovoj cjelini naglasak je na opisu postupaka i odluka, bez ulaska u tehničke detalje, naredbe ili ispise alata, koji se obrađuju u zasebnim dijelovima projekta.
+Ova cjelina opisuje provedbu vlastitog praktičnog dijela rada, s naglaskom na primjenu sigurnosnog audita i hardening mjera nad Linux poslužiteljskim sustavom. Praktični dio temelji se na realističnom poslužiteljskom radnom okruženju i slijedi fazni pristup koji uključuje inicijalni audit, odabir i primjenu hardening mjera te ponovnu evaluaciju sigurnosnog stanja. U ovoj cjelini naglasak je na opisu postupaka i odluka, bez ulaska u tehničke detalje, naredbe ili ispise alata, koji se obrađuju u zasebnim dijelovima projekta.
 
 ## 3.1. Opis radnog okruženja
 
@@ -18,7 +18,7 @@ Kao osnovni alat za sigurnosni audit korišten je Lynis. Lynis omogućuje sustav
 
 CIS Benchmarks koriste se kao referentni sigurnosni standard za interpretaciju nalaza sigurnosnog audita. Benchmark za Ubuntu Server 22.04 LTS pruža strukturirane smjernice za sigurnu konfiguraciju sustava, raspoređene po jasno definiranim sigurnosnim domenama. U ovom praktičnom dijelu CIS Benchmarks ne koriste se kao stroga kontrolna lista, već kao okvir za procjenu relevantnosti i prioriteta pojedinih hardening mjera. Time se omogućuje selektivan pristup hardeningu, pri kojem se uzimaju u obzir namjena sustava i potencijalni utjecaj promjena na njegovu funkcionalnost.
 
-Teorijsku i metodološku podlogu praktičnog dijela rada čine smjernice iz dokumenta NIST Special Publication 800-123. NIST pruža opći okvir za sigurnu konfiguraciju i održavanje Linux sustava, s naglaskom na kontinuirani sigurnosni proces koji uključuje audit, primjenu sigurnosnih mjera i ponovnu evaluaciju. U ovom radu NIST smjernice koriste se za opravdanje faznog pristupa praktičnom dijelu, kao i za objašnjenje zašto sigurnosni hardening nije jednokratna aktivnost, već iterativni proces.
+Teorijsku i metodološku podlogu praktičnog dijela rada čine smjernice iz dokumenta NIST Special Publication 800-123. NIST pruža opći okvir za sigurnu konfiguraciju i održavanje Linux sustava, s naglaskom na kontinuirani sigurnosni proces koji uključuje audit, primjenu sigurnosnih mjera i ponovnu evaluaciju. U ovom radu NIST smjernice koriste se kao teorijska podloga i za objašnjenje zašto sigurnosni hardening nije jednokratna aktivnost, već iterativni proces.
 
 Kombinacijom Lynisa, CIS Benchmarks i NIST smjernica ostvaruje se jasan odnos između alata, standarda i metodologije. Lynis služi za identifikaciju sigurnosnih slabosti, CIS Benchmarks za vrednovanje i kontekstualizaciju preporučenih mjera, dok NIST osigurava teorijski okvir koji povezuje audit i hardening u koherentan sigurnosni proces. Takav pristup omogućuje provedbu praktičnog dijela rada na strukturiran i akademski utemeljen način, bez oslanjanja na automatizirane ili nekritički primijenjene konfiguracijske promjene.
 
