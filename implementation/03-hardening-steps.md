@@ -534,3 +534,107 @@ Ova kontrola osigurava da se novokreirani resursi ne stvaraju s preširokim dozv
 
 Provedene hardening mjere u području autentikacije korisnika i politike lozinki u potpunosti adresiraju relevantne CIS kontrole iz poglavlja 5 (*Access, Authentication and Authorization*). Time je osigurano da sustav zadovoljava minimalne sigurnosne zahtjeve za upravljanje korisničkim računima i vjerodajnicama, uz smanjenje napadne površine i povećanje otpornosti na napade usmjerene na kompromitaciju identiteta.
 
+
+## 3.4. Sigurnost procesa podizanja sustava (Boot security)
+
+Na temelju nalaza inicijalnog Lynis audita provedene su hardening mjere usmjerene na zaštitu procesa podizanja sustava. Cilj ove faze je spriječiti neautorizirano mijenjanje parametara podizanja sustava te onemogućiti pokretanje sustava u single-user ili rescue načinu rada bez autentikacije.
+
+Hardening mjere provedene su konfiguracijom GRUB bootloadera, koji se koristi kao zadani bootloader na Ubuntu Server 22.04 LTS sustavima.
+
+
+### Provjera početnog stanja GRUB konfiguracije
+
+Prije primjene hardening mjera provjerena je postojeća GRUB konfiguracija kako bi se potvrdio nalaz iz inicijalnog audita da lozinka nije definirana.
+
+```bash
+sudo grep "password" /boot/grub/grub.cfg
+````
+
+Rezultat ove provjere potvrdio je da u GRUB konfiguraciji nije definirana hashirana lozinka za zaštitu bootloadera.
+
+---
+
+### Generiranje hashirane GRUB lozinke
+
+Za zaštitu GRUB bootloadera generirana je hashirana lozinka korištenjem alata `grub-mkpasswd-pbkdf2`.
+
+```bash
+sudo grub-mkpasswd-pbkdf2
+```
+
+Tijekom izvođenja naredbe definirana je lozinka za GRUB, a alat je generirao PBKDF2 hash koji se koristi u konfiguraciji bootloadera.
+
+Dobivena hashirana vrijednost korištena je u sljedećem koraku konfiguracije.
+
+---
+
+### Definiranje superusera za GRUB bootloader
+
+Kako bi se ograničilo tko može mijenjati parametre podizanja sustava, definiran je GRUB superuser.
+
+U datoteku `/etc/grub.d/40_custom` dodane su sljedeće konfiguracijske linije:
+
+```bash
+sudo nano /etc/grub.d/40_custom
+```
+
+```bash
+set superusers="root"
+password_pbkdf2 root <PBKDF2_HASH>
+```
+
+Na mjesto `<PBKDF2_HASH>` upisana je hashirana lozinka generirana u prethodnom koraku.
+
+---
+
+### Ažuriranje GRUB konfiguracije
+
+Nakon izmjene konfiguracijskih datoteka GRUB bootloadera izvršeno je ponovno generiranje glavne GRUB konfiguracije.
+
+```bash
+sudo update-grub
+```
+
+Ovim korakom nove sigurnosne postavke primijenjene su na stvarnu konfiguraciju bootloadera.
+
+---
+
+### Provjera primjene hardening mjera
+
+Kako bi se potvrdilo da je lozinka uspješno definirana, ponovno je provjerena GRUB konfiguracija:
+
+```bash
+sudo grep "password_pbkdf2" /boot/grub/grub.cfg
+```
+
+Prisutnost hashirane lozinke u GRUB konfiguraciji potvrđuje da je bootloader zaštićen od neautoriziranih izmjena.
+
+---
+
+### Sigurnosni učinak provedenih mjera
+
+Provedenim hardening mjerama postignuti su sljedeći sigurnosni učinci:
+
+* onemogućeno je neautorizirano uređivanje GRUB boot parametara
+* spriječen je pristup single-user i rescue načinu rada bez autentikacije
+* povećana je otpornost sustava na lokalne i fizičke napade
+
+Ovim koracima uklonjen je sigurnosni nedostatak identificiran u *baseline* stanju sustava te je proces podizanja sustava adekvatno zaštićen.
+
+
+### 3.4.1. Usklađenost s CIS Ubuntu Linux 22.04 LTS Benchmarkom
+
+Provedene hardening mjere vezane uz sigurnost procesa podizanja sustava u skladu su s preporukama definiranima u CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0. CIS smjernice u ovom području usmjerene su na zaštitu bootloadera od neautoriziranih izmjena te onemogućavanje pokretanja sustava u privilegiranim načinima rada bez autentikacije.
+
+Primjenom lozinke za GRUB bootloader i definiranjem GRUB superusera adresiran je sigurnosni rizik koji proizlazi iz mogućnosti izmjene parametara podizanja sustava, uključujući pristup single-user i rescue načinu rada.
+
+Provedene mjere izravno su usklađene sa sljedećim CIS kontrolama:
+
+- **CIS 1.4.1 - Ensure bootloader password is set**  
+  Ova kontrola zahtijeva definiranje lozinke za GRUB bootloader kako bi se spriječilo neautorizirano uređivanje boot parametara. Postavljanjem hashirane lozinke i superusera u GRUB konfiguraciji osigurana je autentikacija prije bilo kakvih izmjena procesa podizanja sustava.
+
+- **CIS 1.4.2 - Ensure permissions on bootloader config are configured**  
+  Iako je inicijalni audit pokazao ispravne vlasničke i pristupne dozvole GRUB konfiguracijskih datoteka, provedeni hardening koraci dodatno osiguravaju da se izmjene boot konfiguracije mogu provoditi isključivo kroz definirani GRUB superuser mehanizam.
+
+Usklađivanjem konfiguracije GRUB bootloadera s navedenim CIS kontrolama smanjena je izloženost sustava lokalnim i fizičkim napadima te je osigurana dodatna razina zaštite kritične faze podizanja operacijskog sustava.
+
