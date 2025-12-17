@@ -228,4 +228,100 @@ Neodgovarajuće dozvole konfiguracijske datoteke predstavljaju sigurnosni rizik 
 Rezultati inicijalnog audita ukazuju da je SSH servis funkcionalan, ali konfiguriran s više postavki koje povećavaju sigurnosni rizik u poslužiteljskom okruženju. Identificirani nedostaci odnose se na omogućeni forwarding mehanizam, korištenje zadanog porta, izostanak ograničenja korisnika, omogućenu kompresiju te neodgovarajuće dozvole konfiguracijske datoteke. Navedeni nalazi predstavljaju temelj za primjenu sigurnosnih hardening mjera u sljedećoj fazi rada.
 
 
+### 1.2.3. Autentikacija korisnika i politika lozinki
+
+Inicijalni sigurnosni audit alatom Lynis identificirao je više nedostataka u području autentikacije korisnika, politike lozinki i PAM konfiguracije koji zahtijevaju primjenu sigurnosnih hardening mjera. U nastavku su navedeni isključivo oni nalazi koji izravno predstavljaju ulazne točke za hardening ove sigurnosne domene.
+
+---
+
+### Neodgovarajuće postavke hashiranja lozinki
+
+Lynis je utvrdio da su korištene zadane metode hashiranja lozinki bez dodatnog pojačanja sigurnosti kroz povećani broj iteracija:
+
+```bash
+Performing test ID AUTH-9229 (Check password hashing methods)
+Result: poor password hashing methods found: sha256crypt/sha512crypt (default=5000 rounds)
+Suggestion: Check PAM configuration, add rounds if applicable and expire passwords to encrypt with new values [test:AUTH-9229]
+```
+
+Dodatno je utvrđeno da broj iteracija (rounds) za hashiranje lozinki nije eksplicitno konfiguriran:
+
+```bash
+Performing test ID AUTH-9230 (Check password hashing rounds)
+Result: number of password hashing rounds is not configured
+Suggestion: Configure password hashing rounds in /etc/login.defs [test:AUTH-9230]
+```
+
+Navedeni nalazi ukazuju na potrebu jačanja zaštite pohranjenih lozinki konfiguracijom sigurnijih parametara hashiranja.
+
+---
+
+### Neaktivna politika starosti lozinki
+
+Audit je pokazao da minimalna i maksimalna starost lozinki nije definirana u sustavu:
+
+```bash
+Performing test ID AUTH-9286 (Checking user password aging)
+Result: password minimum age is not configured
+Suggestion: Configure minimum password age in /etc/login.defs [test:AUTH-9286]
+```
+
+```bash
+Result: password aging limits are not configured
+Suggestion: Configure maximum password age in /etc/login.defs [test:AUTH-9286]
+```
+
+Izostanak ovih postavki omogućuje neograničeno korištenje iste lozinke, što predstavlja sigurnosni rizik.
+
+---
+
+### Izostanak PAM modula za provjeru jačine lozinki
+
+Lynis je identificirao da na sustavu nisu instalirani PAM moduli za provjeru jačine lozinki:
+
+```bash
+Performing test ID AUTH-9262 (Checking presence password strength testing tools)
+Result: pam_cracklib.so NOT found
+Result: pam_passwdqc.so NOT found
+Result: pam_pwquality.so NOT found
+Result: no PAM modules for password strength testing found
+Suggestion: Install a PAM module for password strength testing like pam_cracklib or pam_passwdqc [test:AUTH-9262]
+```
+
+Ovaj nalaz ukazuje da sustav ne provodi tehničku kontrolu kompleksnosti korisničkih lozinki.
+
+---
+
+### Računi bez definiranog datuma isteka
+
+Audit je identificirao korisničke račune bez postavljenog datuma isteka:
+
+
+```bash
+Performing test ID AUTH-9282 (Checking password protected account without expire date)
+Result: found one or more accounts without expire date set
+Account without expire date: luka
+Suggestion: When possible set expire dates for all password protected accounts [test:AUTH-9282]
+```
+
+
+Izostanak kontrole životnog ciklusa korisničkih računa predstavlja dodatni sigurnosni rizik, osobito u dugotrajnim sustavima.
+
+---
+
+### Nedovoljno restriktivan zadani umask
+
+Lynis je identificirao da je zadani umask postavljen na manje restriktivnu vrijednost od preporučene:
+
+```bash
+Suggestion: Default umask in /etc/login.defs could be more strict like 027 [test:AUTH-9288]
+```
+
+Ova postavka utječe na dozvole novo-stvorenih datoteka i direktorija te može dovesti do preširokog pristupa resursima sustava.
+
+---
+
+### Sažetak nalaza relevantnih za hardening autentikacije
+
+Rezultati inicijalnog audita ukazuju da u *baseline* stanju sustava nisu implementirane preporučene sigurnosne politike za upravljanje lozinkama i autentikacijom korisnika. Identificirani nedostaci odnose se na slabe postavke hashiranja lozinki, izostanak kontrole starosti lozinki, nepostojanje PAM modula za provjeru jačine lozinki, nepostojanje datuma isteka korisničkih računa te nedovoljno restriktivan zadani umask. Navedeni nalazi predstavljaju temelj za primjenu sigurnosnih hardening mjera u sljedećoj fazi rada.
 
