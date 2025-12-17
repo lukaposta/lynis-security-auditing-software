@@ -1,4 +1,4 @@
-# 1. Inicijalni sigurnosni audit sustava (Baseline stanje)
+# 1. Inicijalni sigurnosni audit sustava (baseline stanje)
 
 U ovoj cjelini prikazani su rezultati inicijalnog sigurnosnog audita Linux poslužiteljskog sustava provedenog prije primjene bilo kakvih hardening mjera. Cilj ove analize je dokumentirati stvarno početno stanje sigurnosne konfiguracije sustava te identificirati slabosti koje će biti adresirane u kasnijim fazama projekta.
 
