@@ -10,7 +10,7 @@ Na temelju nalaza inicijalnog (*baseline*) sigurnosnog audita provedene su harde
 
 Hardening je proveden korištenjem alata **UFW (Uncomplicated Firewall)**, koji predstavlja standardni mehanizam za upravljanje firewall pravilima na Ubuntu Server sustavima.
 
-### 3.1.1. Provjera početnog stanja firewall sustava
+### Provjera početnog stanja firewall sustava
 
 Prije primjene hardening mjera provjereno je trenutno stanje firewall sustava:
 
@@ -22,7 +22,7 @@ U inicijalnom stanju firewall nije bio aktivan, čime je potvrđeno stanje ident
 
 ---
 
-### 3.1.2. Postavljanje restriktivnih zadanih politika
+### Postavljanje restriktivnih zadanih politika
 
 Kao temelj firewall konfiguracije postavljene su restriktivne zadane politike mrežnog prometa:
 
@@ -35,7 +35,7 @@ Ovim korakom definirano je da se sav dolazni promet prema sustavu implicitno odb
 
 ---
 
-### 3.1.3. Omogućavanje osnovnog mrežnog servisa (SSH)
+### Omogućavanje osnovnog mrežnog servisa (SSH)
 
 Kako bi se osigurala dostupnost administrativnog pristupa sustavu, omogućena je mrežna komunikacija za SSH servis:
 
@@ -47,7 +47,7 @@ Dodavanjem ovog pravila dopuštene su dolazne veze na zadani SSH port.
 
 ---
 
-### 3.1.4. Aktivacija firewall sustava
+### Aktivacija firewall sustava
 
 Nakon definiranja osnovnih pravila firewall sustav je aktiviran:
 
@@ -59,7 +59,7 @@ Prilikom aktivacije potvrđena je promjena statusa firewall sustava.
 
 ---
 
-### 3.1.5. Provjera aktivne firewall konfiguracije
+### Provjera aktivne firewall konfiguracije
 
 Nakon aktivacije izvršena je provjera trenutne konfiguracije firewall sustava:
 
@@ -71,7 +71,7 @@ Provjerom je potvrđeno da je firewall aktivan, da su zadane politike ispravno p
 
 ---
 
-### 3.1.6. Validacija primijenjenih hardening mjera
+### Validacija primijenjenih hardening mjera
 
 Radi potvrde uklanjanja prethodno identificiranih sigurnosnih slabosti ponovno je pokrenut sigurnosni audit alatom Lynis:
 
@@ -90,7 +90,7 @@ Uspješnim izvođenjem ovih koraka potvrđeno je da firewall sustav više nema p
 
 ---
 
-### 3.1.7. Usklađenost firewall hardeninga s CIS Ubuntu Linux 22.04 LTS Benchmarkom
+### 3.1.1. Usklađenost firewall hardeninga s CIS Ubuntu Linux 22.04 LTS Benchmarkom
 
 Provedene hardening mjere u području firewall konfiguracije u potpunosti su usklađene s preporukama definiranima u dokumentu *CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0*, poglavlje **4. Host Based Firewall**.
 
@@ -99,8 +99,8 @@ CIS Benchmark za Ubuntu 22.04 LTS izričito preporučuje korištenje alata **Unc
 U okviru ove konfiguracije ispunjene su sljedeće ključne CIS preporuke:
 
 - Uspostavljen je aktivan host-based firewall korištenjem UFW alata, čime je zadovoljena preporuka **4.1 Configure Uncomplicated Firewall**, koja definira UFW kao preporučeni mehanizam za konfiguraciju trajnih firewall pravila na Ubuntu sustavima.
-- Firewall sustav je aktiviran i stavljen pod kontrolu servisa `ufw.service`, čime je ostvarena usklađenost s preporukom **4.1.2 Ensure ufw service is configured**, koja zahtijeva da firewall bude aktivan i automatski primjenjivan tijekom rada sustava.
-- Postavljena je restriktivna zadana politika za dolazni promet (`deny incoming`), dok je odlazni promet dopušten, što je u skladu s preporukom **4.1.3 Ensure ufw incoming default is configured**, koja naglašava važnost pristupa temeljenog na principu dozvola umjesto zabrana.
+- Firewall sustav je aktiviran i stavljen pod kontrolu servisa `ufw.service`, čime je ostvarena usklađenost s preporukom **4.1.2 - Ensure ufw service is configured**, koja zahtijeva da firewall bude aktivan i automatski primjenjivan tijekom rada sustava.
+- Postavljena je restriktivna zadana politika za dolazni promet (`deny incoming`), dok je odlazni promet dopušten, što je u skladu s preporukom **4.1.3 - Ensure ufw incoming default is configured**, koja naglašava važnost pristupa temeljenog na principu dozvola umjesto zabrana.
 - Omogućeno je isključivo nužno mrežno pravilo za SSH servis, čime se sustav ograničava na jasno definirane i opravdane mrežne servise, u skladu s CIS načelima minimizacije izloženosti i kontrole otvorenih portova.
 - Aktivacijom UFW-a osigurano je da se firewall pravila primjenjuju kroz nftables backend, čime je zadržana kompatibilnost s modernim Linux mrežnim sigurnosnim mehanizmima, kako je predviđeno u CIS Benchmark dokumentaciji.
 
@@ -116,7 +116,7 @@ Na temelju nalaza inicijalnog (*baseline*) sigurnosnog audita provedene su harde
 
 Sve promjene provedene su izmjenom konfiguracijske datoteke `/etc/ssh/sshd_config`, uz ponovno pokretanje SSH servisa kako bi se nove postavke primijenile.
 
-### 3.2.1. Sigurnosna kopija postojeće SSH konfiguracije
+### Sigurnosna kopija postojeće SSH konfiguracije
 
 Prije bilo kakvih izmjena izrađena je sigurnosna kopija postojeće SSH konfiguracije kako bi se omogućio povratak na prethodno stanje u slučaju pogreške:
 
@@ -126,7 +126,7 @@ sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 
 ---
 
-### 3.2.2. Onemogućavanje TCP forwarding mehanizma
+### Onemogućavanje TCP forwarding mehanizma
 
 Kako bi se smanjila mogućnost tuneliranja prometa kroz SSH sesije, onemogućen je TCP forwarding:
 
@@ -144,7 +144,7 @@ Onemogućavanjem TCP forwarding mehanizma uklanja se jedna od identificiranih sl
 
 ---
 
-### 3.2.3. Onemogućavanje SSH kompresije
+### Onemogućavanje SSH kompresije
 
 SSH kompresija je onemogućena kako bi se uklonila dodatna složenost i potencijalni sigurnosni rizici povezani s obradom komprimiranog prometa:
 
@@ -154,7 +154,7 @@ Compression no
 
 ---
 
-### 3.2.4. Promjena zadanog SSH porta
+### Promjena zadanog SSH porta
 
 Radi smanjenja izloženosti automatiziranim napadima i skeniranjima, SSH servis je konfiguriran da sluša na alternativnom portu:
 
@@ -172,7 +172,7 @@ sudo ufw allow 2222/tcp
 
 ---
 
-### 3.2.5. Ograničavanje korisnika s dozvolom SSH pristupa
+### Ograničavanje korisnika s dozvolom SSH pristupa
 
 Kako bi se spriječio neautorizirani pristup sustavu, definirano je ograničenje korisnika koji se smiju prijavljivati putem SSH-a:
 
@@ -184,7 +184,7 @@ Ovim pristupom dozvoljen je SSH pristup isključivo eksplicitno navedenim korisn
 
 ---
 
-### 3.2.6. Onemogućavanje SSH agent forwarding mehanizma
+### Onemogućavanje SSH agent forwarding mehanizma
 
 Agent forwarding je onemogućen kako bi se spriječila potencijalna kompromitacija SSH ključeva tijekom prosljeđivanja autentikacijskog agenta:
 
@@ -194,7 +194,7 @@ AllowAgentForwarding no
 
 ---
 
-### 3.2.7. Onemogućavanje X11 forwarding mehanizma
+### Onemogućavanje X11 forwarding mehanizma
 
 S obzirom na to da X11 forwarding nije potreban u poslužiteljskom okruženju bez grafičkog sučelja, ova funkcionalnost je onemogućena:
 
@@ -204,7 +204,7 @@ X11Forwarding no
 
 ---
 
-### 3.2.8. Ispravljanje dozvola konfiguracijske datoteke sshd_config
+### Ispravljanje dozvola konfiguracijske datoteke sshd_config
 
 Dozvole konfiguracijske datoteke SSH servisa postavljene su na restriktivnu vrijednost kako bi se spriječio neautorizirani pristup:
 
@@ -215,7 +215,7 @@ sudo chmod 600 /etc/ssh/sshd_config
 
 ---
 
-### 3.2.9. Provjera sintakse i ponovno pokretanje SSH servisa
+### Provjera sintakse i ponovno pokretanje SSH servisa
 
 Prije ponovnog pokretanja servisa provjerena je ispravnost konfiguracije:
 
@@ -231,7 +231,7 @@ sudo systemctl restart ssh
 
 ---
 
-### 3.2.10. Validacija primijenjenih hardening mjera
+### Validacija primijenjenih hardening mjera
 
 Nakon primjene svih izmjena ponovno je pokrenut Lynis audit kako bi se potvrdilo uklanjanje prethodno identificiranih slabosti u SSH konfiguraciji:
 
@@ -240,5 +240,86 @@ sudo lynis audit system
 ```
 
 Uspješnom validacijom potvrđeno je da su ranije detektirane slabe SSH postavke uklonjene te da je sigurnosna konfiguracija SSH servisa značajno poboljšana u odnosu na *baseline* stanje.
+
+U redu.
+Ispod je **isključivo podcjelina 3.2.11**, napisana kao **gotova .md datoteka** za copy–paste u GitHub.
+Stil, ton i razina preciznosti su isti kao kod firewall CIS dijela.
+
+---
+
+## 3.2.1. Usklađenost SSH hardening mjera s CIS Benchmark smjernicama
+
+Provedene hardening mjere SSH servisa izravno su usklađene s preporukama definiranima u dokumentu **CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0**, poglavlje **5.2 - SSH Server Configuration**. CIS Benchmark naglašava potrebu za minimiziranjem napadne površine SSH servisa, ograničavanjem mogućnosti prosljeđivanja prometa, jačanjem kontrole pristupa te osiguravanjem sigurnih konfiguracijskih postavki.
+
+Primijenjene mjere u ovoj fazi hardeninga pokrivaju sljedeće CIS kontrole:
+
+### Onemogućavanje nepotrebnih SSH forwarding mehanizama
+
+Onemogućavanje opcija **AllowTcpForwarding**, **AllowAgentForwarding** i **X11Forwarding** izravno je usklađeno s CIS preporukama koje nalažu isključivanje funkcionalnosti koje nisu nužne za administrativni pristup poslužiteljskom sustavu.
+
+Ove mjere odgovaraju CIS kontrolama:
+
+* **5.2.3** - Ensure SSH X11 forwarding is disabled
+* **5.2.7** - Ensure SSH agent forwarding is disabled
+* **5.2.8** - Ensure SSH TCP forwarding is disabled
+
+Cilj ovih kontrola je smanjenje mogućnosti lateralnog kretanja i zlouporabe SSH sesija u slučaju kompromitacije korisničkih vjerodajnica.
+
+---
+
+### Onemogućavanje SSH kompresije
+
+Onemogućavanjem SSH kompresije uklonjena je dodatna složenost protokola koja može dovesti do sigurnosnih ranjivosti i povećanja napadne površine.
+
+Ova mjera usklađena je s CIS kontrolom:
+
+* **5.2.6** - Ensure SSH compression is disabled
+
+---
+
+### Promjena zadanog SSH porta
+
+Promjena SSH porta sa zadane vrijednosti 22 predstavlja dodatnu mjeru zaštite od automatiziranih skeniranja i brute-force napada.
+
+Ova mjera povezana je s CIS preporukom:
+
+* **5.2.18** - Ensure SSH access is limited
+
+Iako promjena porta sama po sebi ne predstavlja potpunu sigurnosnu zaštitu, CIS Benchmark ju prepoznaje kao dio šire strategije smanjenja izloženosti servisa.
+
+---
+
+### Ograničavanje korisnika s SSH pristupom
+
+Definiranjem opcija **AllowUsers** ili **AllowGroups** ograničen je skup korisnika koji se smiju prijavljivati putem SSH-a, čime je smanjena mogućnost neautoriziranog pristupa sustavu.
+
+Ova mjera usklađena je s CIS kontrolom:
+
+* **5.2.18** - Ensure SSH access is limited
+
+---
+
+### Ispravljanje dozvola konfiguracijske datoteke sshd_config
+
+Postavljanjem restriktivnih dozvola nad datotekom `/etc/ssh/sshd_config` osigurano je da konfiguracija SSH servisa nije dostupna neprivilegiranim korisnicima sustava.
+
+Ova mjera odgovara CIS kontroli:
+
+* **5.2.1** - Ensure permissions on /etc/ssh/sshd_config are configured
+
+---
+
+### Sažetak CIS usklađenosti za SSH hardening
+
+Primijenjene SSH hardening mjere u potpunosti su usklađene s temeljnim sigurnosnim zahtjevima CIS Benchmarka za Ubuntu Server okruženje. Fokus je stavljen na:
+
+* smanjenje napadne površine SSH servisa
+* onemogućavanje nepotrebnih funkcionalnosti
+* ograničavanje korisničkog pristupa
+* osiguravanje integriteta konfiguracijskih datoteka
+
+Ovim pristupom osigurana je jasna povezanost između nalaza inicijalnog Lynis audita, implementiranih hardening mjera i službenih CIS sigurnosnih smjernica, čime je postignuta metodološka dosljednost i tehnička opravdanost provedenih zahvata.
+
+
 
 
