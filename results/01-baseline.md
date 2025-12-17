@@ -325,3 +325,88 @@ Ova postavka utječe na dozvole novo-stvorenih datoteka i direktorija te može d
 
 Rezultati inicijalnog audita ukazuju da u *baseline* stanju sustava nisu implementirane preporučene sigurnosne politike za upravljanje lozinkama i autentikacijom korisnika. Identificirani nedostaci odnose se na slabe postavke hashiranja lozinki, izostanak kontrole starosti lozinki, nepostojanje PAM modula za provjeru jačine lozinki, nepostojanje datuma isteka korisničkih računa te nedovoljno restriktivan zadani umask. Navedeni nalazi predstavljaju temelj za primjenu sigurnosnih hardening mjera u sljedećoj fazi rada.
 
+### 1.2.4. Sigurnost procesa podizanja sustava (GRUB)
+
+Inicijalni sigurnosni audit alatom Lynis identificirao je nedostatak u konfiguraciji bootloadera koji zahtijeva primjenu sigurnosnih hardening mjera. U nastavku je naveden isključivo nalaz koji izravno predstavlja ulaznu točku za hardening sigurnosti procesa podizanja sustava.
+
+### Izostanak lozinke za GRUB bootloader
+
+Lynis je utvrdio da u GRUB konfiguraciji nije definirana lozinka za zaštitu procesa podizanja sustava:
+
+```bash
+Result: Didn't find hashed password line in GRUB configuration
+Suggestion: Set a password on GRUB boot loader to prevent altering boot configuration (e.g. boot in single user mode without password) [test:BOOT-5122]
+```
+
+Izostanak lozinke za GRUB omogućuje neautorizirano mijenjanje parametara podizanja sustava, uključujući pokretanje sustava u single-user ili rescue načinu rada bez autentikacije. Ovaj nalaz predstavlja sigurnosni rizik te zahtijeva primjenu hardening mjera u skladu s preporukama sigurnosnih smjernica.
+
+### Sažetak nalaza relevantnih za hardening boot procesa
+
+Rezultati inicijalnog audita ukazuju da u *baseline* stanju sustava nije implementirana zaštita GRUB bootloadera lozinkom. Navedeni nedostatak predstavlja izravnu ulaznu točku za hardening sigurnosti procesa podizanja sustava i bit će adresiran u sljedećoj fazi rada.
+
+
+### 1.2.5. Logging i auditing
+
+U sklopu inicijalnog sigurnosnog audita sustava provedena je analiza mehanizama zapisivanja i nadzora događaja korištenjem alata Lynis. Cilj ove faze bio je utvrditi postojeće stanje sustava, bez primjene dodatnih sigurnosnih mjera.
+
+### Postojeće stanje lokalnog zapisivanja događaja
+
+Rezultati audita pokazuju da sustav ima aktivnu osnovnu infrastrukturu za lokalno zapisivanje događaja:
+
+```
+Found a logging daemon
+IsRunning: process 'rsyslogd' found
+IsRunning: process 'systemd-journald' found
+```
+
+Također je potvrđeno postojanje konfiguracije za rotaciju log zapisa:
+
+```
+/etc/logrotate.conf found
+/etc/logrotate.d found
+```
+
+Ovi nalazi potvrđuju da lokalno zapisivanje događaja postoji i funkcionalno je, ali bez dodatnih sigurnosnih mehanizama za zaštitu integriteta i dostupnosti logova.
+
+---
+
+### Neaktivno udaljeno zapisivanje događaja
+
+Analizom konfiguracijskih datoteka `rsyslog` servisa utvrđeno je da udaljeno zapisivanje događaja nije konfigurirano:
+
+```
+Result: no remote target found
+Result: no remote logging found
+```
+
+Svi zapisi se pohranjuju isključivo lokalno na sustavu. U slučaju kompromitacije sustava, napadač bi imao mogućnost brisanja ili izmjene log zapisa, čime bi se onemogućila pouzdana forenzička analiza.
+
+Ovaj nalaz identificiran je kao područje koje zahtijeva dodatno utvrđivanje sigurnosti.
+
+---
+
+### Neaktivan audit podsustav (auditd)
+
+Provjerom stanja audit mehanizma utvrđeno je da servis `auditd` nije aktivan:
+
+```
+IsRunning: process 'auditd' not found
+Result: auditd not active
+```
+
+Zbog nepostojanja aktivnog audit servisa, sustav ne prikuplja detaljne zapise o sigurnosno relevantnim događajima poput promjena konfiguracijskih datoteka, administrativnih aktivnosti ili pokušaja neovlaštenog pristupa.
+
+Ovaj nedostatak predstavlja značajan sigurnosni rizik te je jasno identificiran kao kandidat za hardening.
+
+---
+
+### Sažetak identificiranih područja za hardening
+
+Na temelju provedenog baseline audita, u području zapisivanja i nadzora događaja identificirana su sljedeća područja koja zahtijevaju hardening:
+
+- auditd servis nije aktivan
+- audit pravila nisu definirana
+- udaljeno zapisivanje logova nije konfigurirano
+
+Ovi nalazi poslužit će kao temelj za implementaciju hardening mjera u skladu s CIS Ubuntu Linux 22.04 LTS Benchmarkom, poglavlje 4.2 Logging and Auditing.
+
