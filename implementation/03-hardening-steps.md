@@ -110,4 +110,135 @@ Na temelju ponovnog pokretanja Lynis audita potvrđeno je da su ranije identific
 
 Ovim korakom zaključena je faza hardeninga mrežne filtracije, a sustav je doveden u stanje koje je u skladu s preporučenim sigurnosnim praksama za Ubuntu Linux 22.04 LTS poslužiteljske sustave.
 
+## 3.2. Hardening SSH konfiguracije
+
+Na temelju nalaza inicijalnog (*baseline*) sigurnosnog audita provedene su hardening mjere usmjerene na dodatno utvrđivanje konfiguracije SSH servisa. Cilj ove faze je smanjiti napadnu površinu SSH servisa, ograničiti mogućnosti zlouporabe te uskladiti konfiguraciju s preporučenim sigurnosnim praksama za poslužiteljska okruženja.
+
+Sve promjene provedene su izmjenom konfiguracijske datoteke `/etc/ssh/sshd_config`, uz ponovno pokretanje SSH servisa kako bi se nove postavke primijenile.
+
+### 3.2.1. Sigurnosna kopija postojeće SSH konfiguracije
+
+Prije bilo kakvih izmjena izrađena je sigurnosna kopija postojeće SSH konfiguracije kako bi se omogućio povratak na prethodno stanje u slučaju pogreške:
+
+```bash
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+````
+
+---
+
+### 3.2.2. Onemogućavanje TCP forwarding mehanizma
+
+Kako bi se smanjila mogućnost tuneliranja prometa kroz SSH sesije, onemogućen je TCP forwarding:
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+Postavljena je sljedeća direktiva:
+
+```text
+AllowTcpForwarding no
+```
+
+Onemogućavanjem TCP forwarding mehanizma uklanja se jedna od identificiranih slabih točaka SSH konfiguracije.
+
+---
+
+### 3.2.3. Onemogućavanje SSH kompresije
+
+SSH kompresija je onemogućena kako bi se uklonila dodatna složenost i potencijalni sigurnosni rizici povezani s obradom komprimiranog prometa:
+
+```text
+Compression no
+```
+
+---
+
+### 3.2.4. Promjena zadanog SSH porta
+
+Radi smanjenja izloženosti automatiziranim napadima i skeniranjima, SSH servis je konfiguriran da sluša na alternativnom portu:
+
+```text
+Port 2222
+```
+
+Napomena: Odabrani port služi kao primjer i nije standardni SSH port.
+
+Ako je aktivan firewall, potrebno je omogućiti novi SSH port:
+
+```bash
+sudo ufw allow 2222/tcp
+```
+
+---
+
+### 3.2.5. Ograničavanje korisnika s dozvolom SSH pristupa
+
+Kako bi se spriječio neautorizirani pristup sustavu, definirano je ograničenje korisnika koji se smiju prijavljivati putem SSH-a:
+
+```text
+AllowUsers luka
+```
+
+Ovim pristupom dozvoljen je SSH pristup isključivo eksplicitno navedenim korisnicima.
+
+---
+
+### 3.2.6. Onemogućavanje SSH agent forwarding mehanizma
+
+Agent forwarding je onemogućen kako bi se spriječila potencijalna kompromitacija SSH ključeva tijekom prosljeđivanja autentikacijskog agenta:
+
+```text
+AllowAgentForwarding no
+```
+
+---
+
+### 3.2.7. Onemogućavanje X11 forwarding mehanizma
+
+S obzirom na to da X11 forwarding nije potreban u poslužiteljskom okruženju bez grafičkog sučelja, ova funkcionalnost je onemogućena:
+
+```text
+X11Forwarding no
+```
+
+---
+
+### 3.2.8. Ispravljanje dozvola konfiguracijske datoteke sshd_config
+
+Dozvole konfiguracijske datoteke SSH servisa postavljene su na restriktivnu vrijednost kako bi se spriječio neautorizirani pristup:
+
+```bash
+sudo chown root:root /etc/ssh/sshd_config
+sudo chmod 600 /etc/ssh/sshd_config
+```
+
+---
+
+### 3.2.9. Provjera sintakse i ponovno pokretanje SSH servisa
+
+Prije ponovnog pokretanja servisa provjerena je ispravnost konfiguracije:
+
+```bash
+sudo sshd -t
+```
+
+Ako nema ispisa grešaka, SSH servis je ponovno pokrenut:
+
+```bash
+sudo systemctl restart ssh
+```
+
+---
+
+### 3.2.10. Validacija primijenjenih hardening mjera
+
+Nakon primjene svih izmjena ponovno je pokrenut Lynis audit kako bi se potvrdilo uklanjanje prethodno identificiranih slabosti u SSH konfiguraciji:
+
+```bash
+sudo lynis audit system
+```
+
+Uspješnom validacijom potvrđeno je da su ranije detektirane slabe SSH postavke uklonjene te da je sigurnosna konfiguracija SSH servisa značajno poboljšana u odnosu na *baseline* stanje.
+
 
