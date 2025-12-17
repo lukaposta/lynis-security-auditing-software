@@ -1,4 +1,4 @@
-# 3. Sigurnosni hardening sustava
+# 3. Sigurnosno učvršćivanje (hardening) sustava
 
 U ovoj cjelini dokumentira se provedba sigurnosnih hardening mjera temeljenih na nalazima inicijalnog Lynis audita. Svaka hardening mjera izravno se nadovezuje na prethodno identificirani sigurnosni nedostatak te je usklađena s preporukama iz CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0.
 
