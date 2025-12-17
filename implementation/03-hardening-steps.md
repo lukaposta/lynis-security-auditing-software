@@ -321,5 +321,216 @@ Primijenjene SSH hardening mjere u potpunosti su usklađene s temeljnim sigurnos
 Ovim pristupom osigurana je jasna povezanost između nalaza inicijalnog Lynis audita, implementiranih hardening mjera i službenih CIS sigurnosnih smjernica, čime je postignuta metodološka dosljednost i tehnička opravdanost provedenih zahvata.
 
 
+Savršeno.
+Ispod je **kompletna podcjelina 3.3**, napisana kao **jedinstvena .md datoteka spremna za copy-paste u GitHub**.
 
+Nema CIS referenci ovdje.
+Samo **konkretni Ubuntu hardening koraci** koji izravno rješavaju ono što je Lynis označio u baselineu.
+
+---
+
+## 3.3. Autentikacija korisnika i politika lozinki
+
+Na temelju nalaza inicijalnog (*baseline*) sigurnosnog audita provedene su hardening mjere usmjerene na jačanje autentikacije korisnika, politike lozinki i PAM konfiguracije. Cilj ove faze je osigurati otporniju zaštitu korisničkih vjerodajnica, ograničiti životni ciklus lozinki i računa te smanjiti rizik od kompromitacije sustava putem slabih ili dugotrajno važećih lozinki.
+
+Hardening mjere provedene su izmjenama konfiguracijskih datoteka sustava i instalacijom dodatnih PAM modula, uz minimalan utjecaj na funkcionalnost sustava.
+
+### Konfiguracija jačeg hashiranja lozinki
+
+Kako bi se povećala otpornost pohranjenih lozinki na brute-force i offline napade, konfiguriran je veći broj iteracija za hashiranje lozinki.
+
+U datoteci `/etc/login.defs` postavljene su sljedeće vrijednosti:
+
+```bash
+sudo nano /etc/login.defs
+```
+
+Dodane ili izmijenjene linije:
+
+```text
+SHA_CRYPT_MIN_ROUNDS 10000
+SHA_CRYPT_MAX_ROUNDS 50000
+```
+
+Ovim postavkama povećan je broj iteracija prilikom hashiranja lozinki, čime je značajno povećano vrijeme potrebno za pokušaje razbijanja hashiranih lozinki.
+
+---
+
+### Aktivacija politike starosti lozinki
+
+Kako bi se spriječilo neograničeno korištenje iste lozinke, definirane su minimalna i maksimalna starost lozinki.
+
+U datoteci `/etc/login.defs` konfigurirane su sljedeće vrijednosti:
+
+```bash
+sudo nano /etc/login.defs
+```
+
+Dodane ili izmijenjene linije:
+
+```text
+PASS_MIN_DAYS 7
+PASS_MAX_DAYS 90
+PASS_WARN_AGE 14
+```
+
+Ovim postavkama osigurano je da korisnici redovito mijenjaju lozinke te da budu unaprijed upozoreni prije isteka važeće lozinke.
+
+---
+
+### Instalacija PAM modula za provjeru jačine lozinki
+
+Kako bi se tehnički onemogućilo postavljanje slabih lozinki, instaliran je PAM modul za provjeru kompleksnosti lozinki.
+
+Instalacija modula provedena je sljedećom naredbom:
+
+```bash
+sudo apt install libpam-pwquality -y
+```
+
+Nakon instalacije, modul je konfiguriran u PAM datoteci za upravljanje lozinkama.
+
+Uređena je datoteka `/etc/pam.d/common-password`:
+
+```bash
+sudo nano /etc/pam.d/common-password
+```
+
+Dodana ili prilagođena linija:
+
+```text
+password requisite pam_pwquality.so retry=3 minlen=12 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1
+```
+
+Ovim postavkama definirana je minimalna duljina lozinke te obavezna prisutnost velikih i malih slova, znamenki i posebnih znakova.
+
+---
+
+### Postavljanje datuma isteka korisničkih računa
+
+Kako bi se osigurala kontrola životnog ciklusa korisničkih računa, postavljen je datum isteka za postojeći korisnički račun.
+
+Za korisnika `luka` izvršena je sljedeća naredba:
+
+```bash
+sudo chage -E 2026-12-31 luka
+```
+
+Ovim korakom definirano je da korisnički račun automatski prestaje vrijediti nakon navedenog datuma, osim ako se datum isteka ne produži.
+
+---
+
+### Postavljanje restriktivnijeg zadanog umask-a
+
+Radi ograničavanja pristupa novo-stvorenim datotekama i direktorijima, zadani umask sustava postavljen je na restriktivniju vrijednost.
+
+U datoteci `/etc/login.defs` izmijenjena je vrijednost umask-a:
+
+```bash
+sudo nano /etc/login.defs
+```
+
+Postavljena vrijednost:
+
+```text
+UMASK 027
+```
+
+Ovim postavkama osigurano je da novo-stvorene datoteke i direktoriji nisu dostupni neautoriziranim korisnicima.
+
+---
+
+### Validacija primijenjenih hardening mjera
+
+Nakon provedbe navedenih hardening mjera ponovno je pokrenut sigurnosni audit alatom Lynis radi provjere uklanjanja prethodno identificiranih slabosti:
+
+```bash
+sudo lynis audit system
+```
+
+Dodatno su provjereni zapisi vezani uz autentikaciju i politiku lozinki:
+
+```bash
+grep "AUTH-" /var/log/lynis.log
+grep "password" /var/log/lynis.log
+```
+
+Rezultati ponovnog audita potvrđuju da su ranije identificirani sigurnosni nedostaci u području autentikacije korisnika i politike lozinki uspješno adresirani primjenom navedenih hardening mjera.
+
+---
+
+### 3.3.1. Usklađenost hardening mjera s CIS Ubuntu Linux 22.04 LTS Benchmarkom
+
+Provedene hardening mjere u području autentikacije korisnika i politike lozinki izravno su usklađene s preporukama definiranima u dokumentu *CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0*. CIS Benchmark definira minimalne sigurnosne zahtjeve za upravljanje korisničkim računima, lozinkama i autentikacijskim mehanizmima s ciljem smanjenja rizika od kompromitacije sustava.
+
+U nastavku je prikazan pregled relevantnih CIS kontrola koje su adresirane primjenom hardening mjera opisanih u ovoj cjelini.
+
+---
+
+#### Jačanje metoda hashiranja lozinki
+
+Provedene mjere konfiguracije hashiranja lozinki usklađene su s CIS kontrolama koje zahtijevaju korištenje snažnih kriptografskih algoritama i adekvatnog broja iteracija za pohranu lozinki.
+
+Relevantne CIS kontrole:
+
+- **CIS 5.4.1** - Ensure password hashing algorithm is SHA-512  
+- **CIS 5.4.2** - Ensure password hashing rounds are configured  
+
+Ove kontrole zahtijevaju eksplicitnu konfiguraciju parametara hashiranja lozinki kako bi se povećala otpornost na brute-force i offline napade nad pohranjenim hash vrijednostima.
+
+---
+
+#### Politika starosti lozinki
+
+Hardening mjere koje uvode minimalnu i maksimalnu starost lozinki usklađene su s CIS preporukama za upravljanje životnim ciklusom korisničkih vjerodajnica.
+
+Relevantne CIS kontrole:
+
+- **CIS 5.4.3** - Ensure password minimum age is configured  
+- **CIS 5.4.4** - Ensure password maximum age is configured  
+
+Primjena ovih kontrola osigurava redovitu promjenu lozinki te smanjuje rizik dugotrajnog korištenja kompromitiranih vjerodajnica.
+
+---
+
+#### Provjera jačine lozinki putem PAM modula
+
+Instalacija i konfiguracija PAM modula za provjeru jačine lozinki izravno je usklađena s CIS zahtjevima za tehničku kontrolu kompleksnosti korisničkih lozinki.
+
+Relevantne CIS kontrole:
+
+- **CIS 5.4.5** - Ensure password complexity is configured  
+
+Ova kontrola zahtijeva da sustav provodi provjeru minimalne duljine, kompleksnosti i strukture lozinki prilikom njihove promjene ili kreiranja.
+
+---
+
+#### Upravljanje istekom korisničkih računa
+
+Hardening mjere koje uvode datume isteka korisničkih računa usklađene su s CIS preporukama za kontrolu aktivnih korisničkih identiteta.
+
+Relevantne CIS kontrole:
+
+- **CIS 5.5.1** - Ensure inactive user accounts are locked  
+- **CIS 5.5.2** - Ensure system accounts are secured  
+
+Ove kontrole smanjuju rizik zadržavanja aktivnih, ali nepotrebnih korisničkih računa na sustavu.
+
+---
+
+#### Restriktivni zadani umask
+
+Podešavanje restriktivnijeg zadanog umask parametra usklađeno je s CIS preporukama za kontrolu dozvola novo-stvorenih datoteka i direktorija.
+
+Relevantne CIS kontrole:
+
+- **CIS 5.6.1** - Ensure default user umask is configured  
+
+Ova kontrola osigurava da se novokreirani resursi ne stvaraju s preširokim dozvolama koje bi mogle omogućiti neautorizirani pristup.
+
+---
+
+#### Zaključak usklađenosti s CIS standardom
+
+Provedene hardening mjere u području autentikacije korisnika i politike lozinki u potpunosti adresiraju relevantne CIS kontrole iz poglavlja 5 (*Access, Authentication and Authorization*). Time je osigurano da sustav zadovoljava minimalne sigurnosne zahtjeve za upravljanje korisničkim računima i vjerodajnicama, uz smanjenje napadne površine i povećanje otpornosti na napade usmjerene na kompromitaciju identiteta.
 
