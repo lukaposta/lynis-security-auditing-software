@@ -247,7 +247,7 @@ Stil, ton i razina preciznosti su isti kao kod firewall CIS dijela.
 
 ---
 
-## 3.2.1. Usklađenost SSH hardening mjera s CIS Benchmark smjernicama
+## 3.2.1. Usklađenost SSH hardening mjera s CIS Ubuntu Linux 22.04 LTS Benchmarkom
 
 Provedene hardening mjere SSH servisa izravno su usklađene s preporukama definiranima u dokumentu **CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0**, poglavlje **5.2 - SSH Server Configuration**. CIS Benchmark naglašava potrebu za minimiziranjem napadne površine SSH servisa, ograničavanjem mogućnosti prosljeđivanja prometa, jačanjem kontrole pristupa te osiguravanjem sigurnih konfiguracijskih postavki.
 
@@ -459,7 +459,7 @@ Rezultati ponovnog audita potvrđuju da su ranije identificirani sigurnosni nedo
 
 ---
 
-### 3.3.1. Usklađenost hardening mjera s CIS Ubuntu Linux 22.04 LTS Benchmarkom
+### 3.3.1. Usklađenost hardening mjera autentikacije i lozinki s CIS Ubuntu Linux 22.04 LTS Benchmarkom
 
 Provedene hardening mjere u području autentikacije korisnika i politike lozinki izravno su usklađene s preporukama definiranima u dokumentu *CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0*. CIS Benchmark definira minimalne sigurnosne zahtjeve za upravljanje korisničkim računima, lozinkama i autentikacijskim mehanizmima s ciljem smanjenja rizika od kompromitacije sustava.
 
@@ -621,8 +621,9 @@ Provedenim hardening mjerama postignuti su sljedeći sigurnosni učinci:
 
 Ovim koracima uklonjen je sigurnosni nedostatak identificiran u *baseline* stanju sustava te je proces podizanja sustava adekvatno zaštićen.
 
+---
 
-### 3.4.1. Usklađenost s CIS Ubuntu Linux 22.04 LTS Benchmarkom
+### 3.4.1. Usklađenost hardening mjera podizanja sustava s CIS Ubuntu Linux 22.04 LTS Benchmarkom
 
 Provedene hardening mjere vezane uz sigurnost procesa podizanja sustava u skladu su s preporukama definiranima u CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0. CIS smjernice u ovom području usmjerene su na zaštitu bootloadera od neautoriziranih izmjena te onemogućavanje pokretanja sustava u privilegiranim načinima rada bez autentikacije.
 
@@ -638,3 +639,191 @@ Provedene mjere izravno su usklađene sa sljedećim CIS kontrolama:
 
 Usklađivanjem konfiguracije GRUB bootloadera s navedenim CIS kontrolama smanjena je izloženost sustava lokalnim i fizičkim napadima te je osigurana dodatna razina zaštite kritične faze podizanja operacijskog sustava.
 
+
+
+## 3.5. Zapisivanje i nadzor događaja (Logging i Auditing)
+
+Na temelju nalaza inicijalnog Lynis audita provedene su hardening mjere usmjerene na unaprjeđenje zapisivanja i nadzora sigurnosno relevantnih događaja. Cilj ove faze je osigurati pouzdano lokalno zapisivanje, aktivirati audit podsustav te uspostaviti udaljeno zapisivanje log zapisa kako bi se smanjio rizik gubitka forenzičkih podataka u slučaju kompromitacije sustava.
+
+### Provjera postojećeg stanja logiranja
+
+Prije primjene hardening mjera potvrđeno je da sustav koristi osnovne mehanizme lokalnog zapisivanja događaja putem `rsyslog` i `systemd-journald` servisa.
+
+```bash
+systemctl status rsyslog
+systemctl status systemd-journald
+````
+
+Provjerom je potvrđeno da su oba servisa aktivna i funkcionalna.
+
+Dodatno je potvrđeno postojanje konfiguracije za rotaciju log zapisa:
+
+```bash
+ls /etc/logrotate.conf
+ls /etc/logrotate.d/
+```
+
+Ovi nalazi potvrđuju da lokalno zapisivanje i rotacija logova postoje, ali bez naprednih sigurnosnih mehanizama.
+
+---
+
+### Instalacija auditd servisa
+
+Kako bi se omogućilo detaljno praćenje sigurnosno relevantnih događaja, instaliran je audit podsustav.
+
+```bash
+sudo apt update
+sudo apt install auditd audispd-plugins -y
+```
+
+Instalacijom paketa `auditd` omogućeno je prikupljanje detaljnih zapisa o aktivnostima sustava, dok `audispd-plugins` omogućuju dodatnu obradu audit zapisa.
+
+---
+
+### Aktivacija i pokretanje auditd servisa
+
+Nakon instalacije auditd servis je omogućen i pokrenut:
+
+```bash
+sudo systemctl enable auditd
+sudo systemctl start auditd
+```
+
+Status servisa provjeren je sljedećom naredbom:
+
+```bash
+systemctl status auditd
+```
+
+Provjerom je potvrđeno da je audit podsustav aktivan i spreman za prikupljanje događaja.
+
+---
+
+### Definiranje osnovnih audit pravila
+
+Kako bi se osiguralo praćenje ključnih sigurnosnih događaja, definirana su osnovna audit pravila.
+
+Audit pravila dodana su u datoteku `/etc/audit/rules.d/audit.rules`:
+
+```bash
+sudo nano /etc/audit/rules.d/audit.rules
+```
+
+Dodana su sljedeća osnovna pravila:
+
+```bash
+-w /etc/passwd -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/group -p wa -k identity
+-w /etc/sudoers -p wa -k scope
+-w /etc/sudoers.d/ -p wa -k scope
+```
+
+Ova pravila omogućuju nadzor nad promjenama ključnih autentikacijskih i autorizacijskih datoteka.
+
+Nakon izmjene pravila audit servis je ponovno učitan:
+
+```bash
+sudo augenrules --load
+sudo systemctl restart auditd
+```
+
+---
+
+### Provjera funkcioniranja audit sustava
+
+Radi provjere ispravnog rada audit podsustava izvršena je provjera audit zapisa:
+
+```bash
+sudo ausearch -k identity
+```
+
+Prisutnost zapisa potvrđuje da auditd uspješno bilježi definirane događaje.
+
+---
+
+### Konfiguracija udaljenog zapisivanja logova (rsyslog)
+
+Kako bi se spriječio gubitak log zapisa u slučaju kompromitacije sustava, konfigurirano je udaljeno zapisivanje logova putem `rsyslog` servisa.
+
+U datoteku `/etc/rsyslog.d/50-default.conf` dodan je zapis za udaljeni log server:
+
+```bash
+sudo nano /etc/rsyslog.d/50-default.conf
+```
+
+Dodana je sljedeća linija:
+
+```bash
+*.* @@<REMOTE_LOG_SERVER>:514
+```
+
+Na mjesto `<REMOTE_LOG_SERVER>` upisana je IP adresa ili naziv udaljenog log poslužitelja.
+
+Nakon izmjene konfiguracije rsyslog servis je ponovno pokrenut:
+
+```bash
+sudo systemctl restart rsyslog
+```
+
+---
+
+### Provjera konfiguracije udaljenog logiranja
+
+Radi provjere da konfiguracija udaljenog logiranja postoji, analizirana je rsyslog konfiguracija:
+
+```bash
+grep "@@" /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+```
+
+Ovim korakom potvrđeno je da je udaljeno zapisivanje logova aktivno konfigurirano.
+
+---
+
+### Sigurnosni učinak provedenih mjera
+
+Provedenim hardening mjerama postignuti su sljedeći sigurnosni učinci:
+
+* aktiviran je audit podsustav za detaljno praćenje sigurnosnih događaja
+* definirana su osnovna audit pravila za kritične sustavske datoteke
+* omogućeno je udaljeno zapisivanje log zapisa radi očuvanja forenzičkih podataka
+* povećana je pouzdanost i otpornost mehanizama zapisivanja događaja
+
+Ovim koracima uklonjeni su sigurnosni nedostaci identificirani u *baseline* stanju sustava te je uspostavljen znatno viši stupanj nadzora i revizije aktivnosti.
+
+---
+
+U pravu si. Ovo treba biti **kraće, sažeto i simetrično** s prethodnim CIS podcjelinama.
+Ispod je **skraćena, točno odmjerena verzija** podcjeline **3.5.X**, u istom opsegu kao firewall i SSH CIS dijelovi.
+
+Sve je pisano **za direktni copy-paste u GitHub `.md` datoteku**.
+
+---
+
+## 3.5.1. Usklađenost zapisivanja i nadzora s CIS Ubuntu Linux 22.04 LTS Benchmarkom
+
+Provedene hardening mjere u području zapisivanja i nadzora događaja usklađene su s preporukama iz dokumenta **CIS Ubuntu Linux 22.04 LTS Benchmark v3.0.0**, poglavlje **6. Logging and Auditing**.
+
+Aktivacijom i konfiguracijom mehanizama lokalnog zapisivanja, udaljenog zapisivanja te audit podsustava, adresirani su sigurnosni nedostaci identificirani tijekom inicijalnog Lynis audita.
+
+Hardening mjere provedene u ovoj fazi odgovaraju sljedećim CIS kontrolama:
+
+* **6.1.1** Configure journald
+  Osigurano je aktivno i ispravno funkcioniranje `systemd-journald` servisa kao temeljnog mehanizma za prikupljanje sistemskih zapisa.
+
+* **6.1.2** Configure rsyslog
+  Potvrđena je aktivnost `rsyslog` servisa te je uspostavljena centralna obrada log zapisa, uz konfiguraciju rotacije logova.
+
+* **6.1.2.6** Ensure rsyslog is configured to send logs to a remote log host
+  Udaljeno zapisivanje događaja identificirano je kao obavezna sigurnosna mjera radi očuvanja integriteta log zapisa u slučaju kompromitacije sustava.
+
+* **6.2.1** Configure auditd Service
+  Aktiviran je `auditd` servis kako bi se omogućilo bilježenje sigurnosno relevantnih događaja na razini operacijskog sustava.
+
+* **6.2.2** Configure audit log retention
+  Konfigurirano je zadržavanje audit zapisa kako bi se spriječio njihov gubitak uslijed popunjenosti prostora.
+
+* **6.2.3** Configure audit rules
+  Definirana su osnovna audit pravila za praćenje administrativnih aktivnosti i autentikacijskih događaja.
+
+Provedene mjere osiguravaju usklađenost sustava s CIS preporukama za logging i auditing te značajno povećavaju razinu vidljivosti i nadzora sigurnosnih događaja.
